@@ -7,7 +7,8 @@ const path = require('path');
 
 var app =express();
 
-const route = require('./routes/route');
+const notice = require('./controllers/noticeController');
+const employee = require('./controllers/employeeController');
 
 //connect mongoDb
 mongoose.connect('mongodb://pasindu2:pasindu2@cluster0-shard-00-00-elbkn.mongodb.net:27017,cluster0-shard-00-01-elbkn.mongodb.net:27017,cluster0-shard-00-02-elbkn.mongodb.net:27017/noticedb?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority',
@@ -35,7 +36,8 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
 //routes
-app.use('/api', route);
+app.use('/api', notice);
+app.use('/api', employee);
 
 //testing
 app.get('/',(req,res) =>{

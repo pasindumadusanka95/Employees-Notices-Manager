@@ -1,21 +1,22 @@
 const express = require('express');
 const  router = express.Router();
 
-const Notice = require('../models/notices');
+const notice = require('../models/notices');
 
 
 //retrieving notice
-router.get('/notices',(req,res,next)=>{
-   Notice.find(function (err, notices) {
+router.get('/notices/get',(req,res,next)=>{
+   notice.find(function (err, notices) {
             res.json(notices);
    })
 });
 
 //add notice
-router.post('/notice',(req,res,next)=>{
-    let newNotice = new Notice({
+router.post('/notice/add',(req,res,next)=>{
+    let newNotice = new notice({
         title : req.body.title,
-        description : req.body.description
+        description : req.body.description,
+        image : req.body.image
     });
 
     newNotice.save((err,notice)=>{
@@ -29,8 +30,8 @@ router.post('/notice',(req,res,next)=>{
 });
 
 //delete notice
-router.delete('/notice/:id',(req,res,next)=>{
-    Notice.deleteOne({_id : req.params.id}, function (err, result) {
+router.delete('/notice/delete/:id',(req,res,next)=>{
+    notice.deleteOne({_id : req.params.id}, function (err, result) {
         if(err){
             res.json(err);
         }

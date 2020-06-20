@@ -1,1 +1,35 @@
-<p>notice works!</p>
+<div class="list-head">
+<form class="mat-step-content" [formGroup]="noticeForm">
+  <div class="pl-5">
+    <div class="row">
+      <div class="col-md-4" style="display: flex;align-items: center;">
+        <div class="avatar-upload">
+          <div class="avatar-edit">
+            <input  type='file' formControlName="profileImage" id="imageUpload2" accept=".png, .jpg, .jpeg"/>
+            <label for="imageUpload2"></label>
+          </div>
+          <div class="avatar-preview">
+<!--            <div id="imagePreview1" *ngIf="imageString" style="background-image: url({{imageString}});">-->
+<!--            </div>-->
+            <div id="imagePreview2" *ngIf="!imageString" style="background-image: url(assets/dp.jpg);">
+            </div>
+          </div>
+        </div>
+        <!-- dp uploading section ends -->
+      </div>
+      <div class="col-md-8">
+        <input type="hidden" formControlName="id">
+        <mat-form-field hintLabel="Notice title" appearance="standard"  class="col-md-10">
+          <mat-label>Title</mat-label>
+          <input type="text" formControlName="title" matInput >
+        </mat-form-field>
+        <br>
+        <mat-form-field appearance="fill"  class="col-md-10" >
+          <mat-label>Description</mat-label>
+          <textarea type="text" formControlName="description" matInput style="min-height: 162px !important;"></textarea>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+</form>
+</div>
