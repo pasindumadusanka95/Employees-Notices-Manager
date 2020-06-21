@@ -31,6 +31,7 @@ import {MatStepperModule} from "@angular/material/stepper";
 import { CustomWarningModalComponent } from './shared/popup-modals/custom-warning-modal/custom-warning-modal.component';
 import { ConfirmationModalComponent } from './shared/popup-modals/confirmation-modal/confirmation-modal.component';
 import { SnackBarComponent } from './shared/popup-modals/snack-bar/snack-bar.component';
+import { AddNoticeComponent } from './modules/notice/add-notice/add-notice.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { SnackBarComponent } from './shared/popup-modals/snack-bar/snack-bar.com
     MainNavComponent,
     CustomWarningModalComponent,
     ConfirmationModalComponent,
-    SnackBarComponent
+    SnackBarComponent,
+    AddNoticeComponent
   ],
   imports: [
     BrowserModule,

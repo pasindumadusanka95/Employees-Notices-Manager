@@ -1,0 +1,35 @@
+<div class="list-head">
+
+  <form class="mat-step-content" [formGroup]="noticeForm">
+    <div class="pl-5">
+      <div class="row">
+        <div class="col-md-4" style="display: flex;align-items: center;">
+          <div class="avatar-upload">
+            <div class="avatar-preview">
+              <div id="imagePreview2" style="background-image: url(assets/dp.jpg);">
+              </div>
+              <br>
+            </div>
+          </div>
+          <!-- dp uploading section ends -->
+        </div>
+        <div class="col-md-8">
+          <!--        <input type="hidden" formControlName="id">-->
+          <mat-form-field  appearance="standard"  class="col-md-10">
+            <mat-label>Title</mat-label>
+            <input type="text" formControlName="title" matInput >
+          </mat-form-field>
+          <br>
+          <mat-form-field appearance="fill"  class="col-md-10" >
+            <mat-label>Description</mat-label>
+            <textarea type="text" formControlName="description" matInput style="min-height: 162px !important;"></textarea>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+    <div class="text-right">
+      <button  mat-raised-button color="basic"  class="mr-2" [mat-dialog-close]>Close</button>
+      <button   mat-raised-button color="basic" (click)="addNotice()" [mat-dialog-close]>Add</button>
+    </div>
+  </form>
+</div>

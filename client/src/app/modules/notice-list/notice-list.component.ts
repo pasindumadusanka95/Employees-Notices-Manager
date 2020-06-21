@@ -5,6 +5,7 @@ import {FormControl} from "@angular/forms";
 import {MatStepper} from "@angular/material/stepper";
 import {MatDialog} from "@angular/material/dialog";
 import {NoticeComponent} from "../notice/notice.component";
+import {AddNoticeComponent} from "../notice/add-notice/add-notice.component";
 
 @Component({
   selector: 'app-notice-list',
@@ -60,12 +61,10 @@ export class NoticeListComponent implements OnInit {
   }
 
   addNews() {
-
     let dialogRef: any;
-
-    dialogRef = this.dialog.open(NoticeComponent, {
-      width: '400px',
-      maxHeight: '400px',
+    dialogRef = this.dialog.open(AddNoticeComponent, {
+      width: '800px',
+      maxHeight: '800px',
       data: {
         yes: false,
 
