@@ -12,16 +12,17 @@ import {MatStepper} from "@angular/material/stepper";
 })
 export class NoticeListComponent implements OnInit {
 
+  objectId : string ;
   notices : Notice[];
+  selectedNotice : Notice;
   finalNoticeList : Notice[] = [];
-  objectId : String ;
+
   searchNoticeList : Notice[] = [];
   search = new FormControl();
 
   constructor(private noticeService : NoticeService) { }
 
   ngOnInit(): void {
-
    this.getNoticeList();
    this.searchTrigger();
 
@@ -41,17 +42,18 @@ export class NoticeListComponent implements OnInit {
 
   }
 
-  viewDetail(stepper : MatStepper){
+  viewDetail(stepper : MatStepper, id : string){
+    console.log("id  "+id);
+    this.objectId = id;
     stepper.next();
   }
 
-  getNoticeList(){
+
+  getNoticeList() {
     this.noticeService.getNotices()
       .subscribe(notices => {
         this.notices = notices;
         this.finalNoticeList = notices;
       });
-
-
   }
 }

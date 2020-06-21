@@ -35,7 +35,7 @@
               <tr *ngFor="let item of notices;index as newsCounter">
                 <th scope="row">{{newsCounter+1}}</th>
                 <td>{{item.title}}</td>
-                <td><a (click)="viewDetail(stepper)">view details</a></td>
+                <td><a (click)="viewDetail(stepper,item._id)">view details</a></td>
               </tr>
 
               </tbody>
@@ -53,7 +53,7 @@
       <h2>Notice Details</h2>
       <div class="ml-auto p-2">
         <div>
-          <app-notice [objectId]= "objectId"></app-notice>
+          <app-notice [objectId] = "objectId"></app-notice>
         </div>
 
       </div>

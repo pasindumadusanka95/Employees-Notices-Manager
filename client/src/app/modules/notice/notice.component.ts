@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {MatStepper} from "@angular/material/stepper";
 import {Notice} from "../../shared/models/notice";
@@ -10,12 +10,16 @@ import {NoticeService} from "../../core/services/notice.service";
   styleUrls: ['./notice.component.css'],
   providers : [NoticeService]
 })
-export class NoticeComponent implements OnInit {
+export class NoticeComponent implements OnInit, OnChanges {
 
-  @Input('objectId') selectedObjectId : String;
+  @Input('objectId') selectedObjectId : string;
   public imageString: String;
   uploading: boolean = false;
-  notice: Notice;
+  notice: Notice = {
+    title: '',
+    description:'',
+    image:''
+  };
   notices: Notice[];
   finalNoticeList: Notice[] = [];
   noticeForm = new FormGroup({
@@ -29,6 +33,16 @@ export class NoticeComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+  //  this.getNotice(this.selectedObjectId);
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log("hello");
+    console.log("check "+ this.selectedObjectId);
+    this.getNotice(this.selectedObjectId);
+    this.noticeForm.disable();
+
   }
 
   deleteNotice(id: any) {
@@ -49,6 +63,12 @@ export class NoticeComponent implements OnInit {
 
   }
 
+  setFormData(){
+    console.log("title "+ this.notice.title);
+    this.noticeForm.controls.title.setValue(this.notice.title);
+    this.noticeForm.controls.description.setValue(this.notice.description);
+  }
+
   getNoticeList() {
     this.noticeService.getNotices()
       .subscribe(notices => {
@@ -56,5 +76,16 @@ export class NoticeComponent implements OnInit {
         this.finalNoticeList = notices;
       });
   }
+
+  getNotice(id:string){
+    this.noticeService.getNotice(id)
+      .subscribe(notice => {
+        this.noticeForm.controls.title.setValue(notice.title);
+        this.noticeForm.controls.description.setValue(notice.description);
+      });
+
+  }
+
+
 
 }
