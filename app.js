@@ -4,11 +4,14 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const path = require('path');
+const errorHandler = require('./_helpers/error-handler');
+const jwt = require('./_helpers/jwt');
 
 var app =express();
 
 const notice = require('./controllers/noticeController');
 const employee = require('./controllers/employeeController');
+const users = require('./users/users.controller');
 
 //connect mongoDb
 mongoose.connect('mongodb://pasindu2:pasindu2@cluster0-shard-00-00-elbkn.mongodb.net:27017,cluster0-shard-00-01-elbkn.mongodb.net:27017,cluster0-shard-00-02-elbkn.mongodb.net:27017/noticedb?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority',
@@ -38,11 +41,15 @@ app.use(express.static(path.join(__dirname, 'public')));
 //routes
 app.use('/api', notice);
 app.use('/api', employee);
+app.use('/api', users);
+
+app.use(jwt());
+app.use(errorHandler);
 
 //testing
-app.get('/',(req,res) =>{
-    res.send('testing');
-});
+// app.get('/',(req,res) =>{
+//     res.send('testing');
+// });
 app.listen(port,()=>{
     console.log('Server started at port: '+port);
 });
