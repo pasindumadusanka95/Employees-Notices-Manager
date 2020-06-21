@@ -1,0 +1,13 @@
+<div class="row text-warning pl-3">
+  <strong><mat-icon style="font-size: 25px; margin-right: 7px; margin-top: 3px">error_outline</mat-icon></strong>
+  <h2 mat-dialog-title> Warning</h2>
+</div>
+<div mat-dialog-content>
+  <p><b>{{data.message}}</b></p>
+</div>
+<div class="text-right">
+  <button mat-raised-button class="mr-2" color="basic" style="color: #c60000"  [mat-dialog-close]="data.no" >No</button>
+  <button mat-raised-button color="basic" style="color: #004b00"
+          [mat-dialog-close]="data.save"  cdkFocusInitial>Yes
+  </button>
+</div>
