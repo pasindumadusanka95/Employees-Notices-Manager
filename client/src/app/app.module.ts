@@ -28,6 +28,9 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {MatTabsModule} from "@angular/material/tabs";
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {MatStepperModule} from "@angular/material/stepper";
+import { CustomWarningModalComponent } from './shared/popup-modals/custom-warning-modal/custom-warning-modal.component';
+import { ConfirmationModalComponent } from './shared/popup-modals/confirmation-modal/confirmation-modal.component';
+import { SnackBarComponent } from './shared/popup-modals/snack-bar/snack-bar.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +38,10 @@ import {MatStepperModule} from "@angular/material/stepper";
     NoticeComponent,
     NoticeListComponent,
     FullPageLoaderComponent,
-    MainNavComponent
+    MainNavComponent,
+    CustomWarningModalComponent,
+    ConfirmationModalComponent,
+    SnackBarComponent
   ],
   imports: [
     BrowserModule,
