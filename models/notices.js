@@ -12,6 +12,7 @@ const NoticeSchema = mongoose.Schema({
      image : {
         type: String,
          required : true
-     }
-});
+     },
+
+},{ timestamps: true });
 const Notice = module.exports = mongoose.model("Notice", NoticeSchema);

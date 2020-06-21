@@ -14,6 +14,7 @@ export class NoticeListComponent implements OnInit {
 
   notices : Notice[];
   finalNoticeList : Notice[] = [];
+  objectId : String ;
   searchNoticeList : Notice[] = [];
   search = new FormControl();
 
