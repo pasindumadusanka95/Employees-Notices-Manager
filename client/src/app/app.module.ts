@@ -32,6 +32,7 @@ import { CustomWarningModalComponent } from './shared/popup-modals/custom-warnin
 import { ConfirmationModalComponent } from './shared/popup-modals/confirmation-modal/confirmation-modal.component';
 import { SnackBarComponent } from './shared/popup-modals/snack-bar/snack-bar.component';
 import { AddNoticeComponent } from './modules/notice/add-notice/add-notice.component';
+import { LoginComponent } from './modules/login/login.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { AddNoticeComponent } from './modules/notice/add-notice/add-notice.compo
     CustomWarningModalComponent,
     ConfirmationModalComponent,
     SnackBarComponent,
-    AddNoticeComponent
+    AddNoticeComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

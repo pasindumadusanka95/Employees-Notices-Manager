@@ -1,5 +1,13 @@
-<div class="container-fluid header"></div>
-<app-main-nav></app-main-nav>
-<div class="container-fluid" >
-  <router-outlet></router-outlet>
+
+<div *ngIf="router.url != '/'">
+  <div class="container-fluid header"></div>
+  <app-main-nav></app-main-nav>
+  <div class="container-fluid" >
+    <router-outlet></router-outlet>
+  </div>
 </div>
+
+<div *ngIf="router.url == '/'">
+  <app-login></app-login>
+</div>
+
