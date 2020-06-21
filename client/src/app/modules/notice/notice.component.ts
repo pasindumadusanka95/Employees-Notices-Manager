@@ -14,8 +14,10 @@ import {SnackBarComponent} from "../../shared/popup-modals/snack-bar/snack-bar.c
 export class NoticeComponent implements OnInit, OnChanges {
 
   @Input('objectId') selectedObjectId : string;
+
   public imageString: String;
   isEdit : boolean = false;
+
   uploading: boolean = false;
   notice: Notice = {
     title: '',
@@ -36,7 +38,6 @@ export class NoticeComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
 
-  //  this.getNotice(this.selectedObjectId);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -44,6 +45,7 @@ export class NoticeComponent implements OnInit, OnChanges {
     console.log("check "+ this.selectedObjectId);
     this.getNotice(this.selectedObjectId);
     this.noticeForm.disable();
+    this.getNoticeList();
 
   }
 
@@ -77,7 +79,7 @@ export class NoticeComponent implements OnInit, OnChanges {
       });
     }
     this.noticeForm.disable();
-    this.getNoticeList();
+
   }
 
   setToEdit(){
@@ -114,4 +116,7 @@ export class NoticeComponent implements OnInit, OnChanges {
     this.noticeForm.disable();
     this.isEdit = false;
   }
+
+
+
 }

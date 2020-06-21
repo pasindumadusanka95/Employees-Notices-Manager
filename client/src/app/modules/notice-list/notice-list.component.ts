@@ -3,6 +3,8 @@ import {NoticeService} from "../../core/services/notice.service";
 import {Notice} from "../../shared/models/notice";
 import {FormControl} from "@angular/forms";
 import {MatStepper} from "@angular/material/stepper";
+import {MatDialog} from "@angular/material/dialog";
+import {NoticeComponent} from "../notice/notice.component";
 
 @Component({
   selector: 'app-notice-list',
@@ -20,7 +22,7 @@ export class NoticeListComponent implements OnInit {
   searchNoticeList : Notice[] = [];
   search = new FormControl();
 
-  constructor(private noticeService : NoticeService) { }
+  constructor(private noticeService : NoticeService, private dialog: MatDialog) { }
 
   ngOnInit(): void {
    this.getNoticeList();
@@ -56,4 +58,22 @@ export class NoticeListComponent implements OnInit {
         this.finalNoticeList = notices;
       });
   }
+
+  addNews() {
+
+    let dialogRef: any;
+
+    dialogRef = this.dialog.open(NoticeComponent, {
+      width: '400px',
+      maxHeight: '400px',
+      data: {
+        yes: false,
+
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+    });
+  }
+
 }

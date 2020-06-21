@@ -1,11 +1,17 @@
 <p  class="page-title"><i class="fa fa-users mr-2"></i>Employees' Notices Manager</p>
-<div class="list-head">
+
+<div class="row list-head">
   <div class="col-md-8 text-left p-2">
     <mat-form-field appearance="outline" style="width: 90%">
       <mat-label>Search by Name</mat-label>
       <input matInput placeholder="Placeholder" [formControl]="search">
       <mat-icon matSuffix>search</mat-icon>
     </mat-form-field>
+  </div>
+  <div class="col-md-4 text-right p-2 mt-2">
+    <button class="btn btn-primary" (click)="addNews()">
+    Add News
+    </button>
   </div>
 </div>
 <br>
@@ -53,7 +59,7 @@
       <h2>Notice Details</h2>
       <div class="ml-auto p-2">
         <div>
-          <app-notice [objectId] = "objectId"></app-notice>
+          <app-notice [objectId] = "objectId" ></app-notice>
         </div>
 
       </div>
