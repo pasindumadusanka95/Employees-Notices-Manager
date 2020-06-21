@@ -40,9 +40,11 @@
         </mat-form-field>
       </div>
     </div>
-<!--    <button class="btn btn-success p-lg-1"  (click)="addNotice()">-->
-<!--     Submit-->
-<!--    </button>-->
+  </div>
+  <div class="text-right">
+    <button mat-raised-button color="basic" class="mr-2"  (click)="setState()" matStepperPrevious><mat-icon>navigate_before</mat-icon>Back To List</button>
+    <button *ngIf="!isEdit" mat-raised-button color="basic"  class="mr-2" (click)="setToEdit()">Edit</button>
+    <button *ngIf="isEdit"  mat-raised-button color="basic" (click)="addNotice()">Save</button>
   </div>
 </form>
 </div>

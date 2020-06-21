@@ -3,6 +3,7 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {MatStepper} from "@angular/material/stepper";
 import {Notice} from "../../shared/models/notice";
 import {NoticeService} from "../../core/services/notice.service";
+import {SnackBarComponent} from "../../shared/popup-modals/snack-bar/snack-bar.component";
 
 @Component({
   selector: 'app-notice',
@@ -14,6 +15,7 @@ export class NoticeComponent implements OnInit, OnChanges {
 
   @Input('objectId') selectedObjectId : string;
   public imageString: String;
+  isEdit : boolean = false;
   uploading: boolean = false;
   notice: Notice = {
     title: '',
@@ -29,7 +31,7 @@ export class NoticeComponent implements OnInit, OnChanges {
 
   });
 
-  constructor(private noticeService: NoticeService) {
+  constructor(private noticeService: NoticeService, private customPopup : SnackBarComponent) {
   }
 
   ngOnInit(): void {
@@ -57,11 +59,32 @@ export class NoticeComponent implements OnInit, OnChanges {
     newNotice.title = this.noticeForm.controls.title.value;
     newNotice.description = this.noticeForm.controls.description.value;
     newNotice.image = "test";
-    this.noticeService.addNotices(newNotice).subscribe(notice=>{
-      this.getNoticeList();
-    })
-
+    if(this.isEdit){
+      this.noticeService.updateNotice(this.selectedObjectId,newNotice).subscribe(notice=>{
+        this.customPopup.openSnackBar("Notice Updated Successfully!","warning")
+        this.getNoticeList();
+      },error => {
+        console.log(error);
+      });
+      this.isEdit = false;
+    }
+    else{
+      this.noticeService.addNotices(newNotice).subscribe(notice=>{
+        this.customPopup.openSnackBar("Notice Saved Successfully!","success")
+        this.getNoticeList();
+      },error => {
+        console.log(error);
+      });
+    }
+    this.noticeForm.disable();
+    this.getNoticeList();
   }
+
+  setToEdit(){
+    this.noticeForm.enable();
+    this.isEdit =true;
+  }
+
 
   setFormData(){
     console.log("title "+ this.notice.title);
@@ -87,5 +110,8 @@ export class NoticeComponent implements OnInit, OnChanges {
   }
 
 
-
+  setState(){
+    this.noticeForm.disable();
+    this.isEdit = false;
+  }
 }

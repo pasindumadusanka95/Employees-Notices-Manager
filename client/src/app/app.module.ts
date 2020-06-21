@@ -72,6 +72,7 @@ import { SnackBarComponent } from './shared/popup-modals/snack-bar/snack-bar.com
   ],
   providers: [
     FullPageLoaderService,
+    SnackBarComponent,
     { provide: HTTP_INTERCEPTORS, useClass: FullPageLoaderInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
