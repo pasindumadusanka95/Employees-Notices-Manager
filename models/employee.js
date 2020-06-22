@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
 
 const employeeSchema = mongoose.Schema({
+    userId : {
+        type : Number,
+        required : true
+    },
     name :{
         type : String,
         required : true
@@ -11,6 +15,14 @@ const employeeSchema = mongoose.Schema({
     },
     address:{
         type: String,
+        required : true
+    },
+    phoneNo:{
+        type : Number,
+        required : true
+    },
+    gender:{
+        type : String,
         required : true
     },
     profilePic:{

@@ -16,7 +16,7 @@ import {AddNoticeComponent} from "../notice/add-notice/add-notice.component";
 export class NoticeListComponent implements OnInit {
 
   objectId : string ;
-  notices : Notice[];
+  notices : Notice[] = [];
   selectedNotice : Notice;
   finalNoticeList : Notice[] = [];
   isUser : boolean =false;
