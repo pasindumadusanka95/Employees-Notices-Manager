@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {AuthenticationService} from "../../core/services/authentication.service";
 
 @Component({
   selector: 'app-main-nav',
@@ -8,9 +9,12 @@ import { Component, OnInit } from '@angular/core';
 export class MainNavComponent implements OnInit {
 
   public image: String;
-  constructor() { }
+  constructor(private authenticationService : AuthenticationService) { }
 
   ngOnInit(): void {
   }
 
+  logout() {
+    this.authenticationService.logout();
+  }
 }

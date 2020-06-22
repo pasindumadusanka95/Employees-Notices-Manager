@@ -32,6 +32,8 @@ router.post('/notice/add',(req,res,next)=>{
         }
         else{
             res.json({ msg : 'Notice added Successfully'});
+            let socketio = req.app.get('socketio');
+            socketio.sockets.emit('notice.created', newNotice);
         }
     });
 });
