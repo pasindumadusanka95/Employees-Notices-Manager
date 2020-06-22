@@ -19,7 +19,8 @@ export class NoticeListComponent implements OnInit {
   notices : Notice[];
   selectedNotice : Notice;
   finalNoticeList : Notice[] = [];
-
+  isUser : boolean =false;
+  isAdmin : boolean = false;
   searchNoticeList : Notice[] = [];
   search = new FormControl();
 
@@ -28,7 +29,14 @@ export class NoticeListComponent implements OnInit {
   ngOnInit(): void {
    this.getNoticeList();
    this.searchTrigger();
+    const token = JSON.parse(localStorage.getItem('user'));
 
+    if(token.role == 'User'){
+      this.isUser = true;
+    }
+    if(token.role == 'Admin'){
+      this.isAdmin = true;
+    }
   }
 
   searchTrigger() {
