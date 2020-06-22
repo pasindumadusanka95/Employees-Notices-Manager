@@ -37,7 +37,7 @@ export class NoticeComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-
+    this.getNoticeList();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -45,7 +45,7 @@ export class NoticeComponent implements OnInit, OnChanges {
     console.log("check "+ this.selectedObjectId);
     this.getNotice(this.selectedObjectId);
     this.noticeForm.disable();
-    this.getNoticeList();
+
 
   }
 

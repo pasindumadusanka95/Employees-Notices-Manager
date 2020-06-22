@@ -1,5 +1,7 @@
 //importing modules
 const express = require('express');
+const http = require('http');
+const socketio = require('socket.io');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
@@ -38,6 +40,13 @@ app.use(bodyParser.json());
 //static files
 app.use(express.static(path.join(__dirname, 'public')));
 
+
+// Attach Socket.io
+var server = http.createServer(app);
+var io = socketio.listen(server);
+app.set('socketio', io);
+app.set('server', server);
+
 //routes
 app.use('/api', notice);
 app.use('/api', employee);
@@ -50,6 +59,10 @@ app.use(errorHandler);
 // app.get('/',(req,res) =>{
 //     res.send('testing');
 // });
-app.listen(port,()=>{
+// app.listen(port,()=>{
+//     console.log('Server started at port: '+port);
+// });
+
+app.get('server').listen(port,()=>{
     console.log('Server started at port: '+port);
 });

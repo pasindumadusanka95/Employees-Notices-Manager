@@ -38,7 +38,7 @@
               </tr>
               </thead>
               <tbody>
-              <tr *ngFor="let item of notices;index as newsCounter">
+              <tr *ngFor="let item of notices.slice().reverse();index as newsCounter">
                 <th scope="row">{{newsCounter+1}}</th>
                 <td>{{item.title}}</td>
                 <td><a (click)="viewDetail(stepper,item._id)" style="cursor: pointer">view details</a></td>

@@ -9,7 +9,7 @@
             <form [formGroup]="form" (ngSubmit)="submit()">
               <mat-form-field appearance="standard">
                 <mat-label>User Name</mat-label>
-                <input matInput type="text" formControlName="username" required>
+                <input matInput type="text" formControlName="username" [ngClass]="{ 'is-invalid': submitted && formData.username.errors }"required>
                 <mat-icon matSuffix>account_circle</mat-icon>
                 <mat-error *ngIf="userFormControl.hasError('required')">
                   user name is <strong>required</strong>
@@ -18,7 +18,7 @@
 
               <mat-form-field appearance="standard">
                 <mat-label>Password</mat-label>
-                <input matInput type="password" formControlName="password" required>
+                <input matInput type="password" formControlName="password" [ngClass]="{ 'is-invalid': submitted && formData.password.errors }" required>
                 <mat-icon matSuffix>lock</mat-icon>
                 <mat-error *ngIf="passwordFormControl.hasError('required')">
                   password is <strong>required</strong>
@@ -29,6 +29,7 @@
                 <!--                <button class="mr-2" mat-raised-button color="basic">Forget Password</button>-->
                 <button class="mr-3" autofocus mat-raised-button color="accent" type="submit" id="login" >Login</button>
               </div>
+              <div *ngIf="error" class="alert alert-danger mt-3 mb-0">{{error}}</div>
             </form>
           </div>
         </div>
