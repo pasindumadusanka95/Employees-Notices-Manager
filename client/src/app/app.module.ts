@@ -35,6 +35,7 @@ import { AddNoticeComponent } from './modules/notice/add-notice/add-notice.compo
 import { LoginComponent } from './modules/login/login.component';
 import {ErrorInterceptor} from "./_helpers/error.interceptor";
 import {JwtInterceptor} from "./_helpers/jwt.interceptor";
+import { EditProfileComponent } from './modules/edit-profile/edit-profile.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import {JwtInterceptor} from "./_helpers/jwt.interceptor";
     ConfirmationModalComponent,
     SnackBarComponent,
     AddNoticeComponent,
-    LoginComponent
+    LoginComponent,
+    EditProfileComponent
   ],
   imports: [
     BrowserModule,

@@ -13,6 +13,14 @@ const employeeSchema = mongoose.Schema({
         type: String,
         required : true
     },
+    phoneNo:{
+        type : Number,
+        required : true
+    },
+    gender:{
+        type : String,
+        required : true
+    },
     profilePic:{
         type : String,
         required : false

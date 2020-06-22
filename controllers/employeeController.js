@@ -11,18 +11,28 @@ router.get('/employees/get',(req,res,next)=>{
     })
 });
 
+//retrieving employee by id
+router.get('/employee/getById/:id',(req,res,next)=>{
+    employee.findById({_id : req.params.id}, function (err, notices) {
+        res.json(notices);
+    })
+});
+
+
 //add employee
 router.post('/employee/add',(req,res,next)=>{
     let newEmployee = new employee({
         name : req.body.name,
         age : req.body.age,
         address : req.body.address,
+        gender : req.body.gender,
+        phoneNo : req.body.phoneNo,
         profilePic : req.body.profilePic
     });
 
     newEmployee.save((err,employee)=>{
         if(err){
-            res.json({msg : 'Failed to add emplyee' });
+            res.json({msg : 'Failed to add employee' });
         }
         else{
             res.json({ msg : 'employee added Successfully'});
@@ -36,10 +46,12 @@ router.put('/employee/update/:id',(req,res,next)=>{
         name : req.body.name,
         age : req.body.age,
         address : req.body.address,
+        gender : req.body.gender,
+        phoneNo : req.body.phoneNo,
         profilePic : req.body.profilePic
     });
 
-    notice.findByIdAndUpdate({_id : req.params.id},{$set:req.body},(err,notice)=>{
+    employee.findByIdAndUpdate({_id : req.params.id},{$set:req.body},(err,notice)=>{
         if(err){
             res.json({msg : 'Failed to update employee' });
         }
@@ -51,7 +63,7 @@ router.put('/employee/update/:id',(req,res,next)=>{
 
 //delete employee
 router.delete('/employee/delete/:id',(req,res,next)=>{
-    notice.deleteOne({_id : req.params.id}, function (err, result) {
+    employee.deleteOne({_id : req.params.id}, function (err, result) {
         if(err){
             res.json(err);
         }
