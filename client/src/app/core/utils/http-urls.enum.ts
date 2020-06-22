@@ -7,5 +7,5 @@ export enum HttpUrls {
   get_a_notice = 'http://localhost:3000/api/notices/getById',
 
   update_employee = 'http://localhost:3000/api/employee/update',
-  get_a_employee = 'http://localhost:3000/api/employee/getById'
+  get_a_employee = 'http://localhost:3000/api/employee/getByUserId'
 }

@@ -13,8 +13,14 @@ router.get('/employees/get',(req,res,next)=>{
 
 //retrieving employee by id
 router.get('/employee/getById/:id',(req,res,next)=>{
-    employee.findById({_id : req.params.id}, function (err, notices) {
-        res.json(notices);
+    employee.findById({_id : req.params.id}, function (err, employees) {
+        res.json(employees);
+    })
+});
+
+router.get('/employee/getByUserId/:id',(req,res,next)=>{
+    employee.find({userId : req.params.id}, function (err, employee) {
+        res.json(employee);
     })
 });
 
@@ -27,7 +33,8 @@ router.post('/employee/add',(req,res,next)=>{
         address : req.body.address,
         gender : req.body.gender,
         phoneNo : req.body.phoneNo,
-        profilePic : req.body.profilePic
+        profilePic : req.body.profilePic,
+        userId : req.body.userId
     });
 
     newEmployee.save((err,employee)=>{
@@ -48,7 +55,8 @@ router.put('/employee/update/:id',(req,res,next)=>{
         address : req.body.address,
         gender : req.body.gender,
         phoneNo : req.body.phoneNo,
-        profilePic : req.body.profilePic
+        profilePic : req.body.profilePic,
+        userId : req.body.userId
     });
 
     employee.findByIdAndUpdate({_id : req.params.id},{$set:req.body},(err,notice)=>{

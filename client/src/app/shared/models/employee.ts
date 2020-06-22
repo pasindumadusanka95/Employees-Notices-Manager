@@ -5,4 +5,5 @@ export class Employee{
   phoneNo : number;
   address : string;
   gender : string;
+  profilePic : string;
 }

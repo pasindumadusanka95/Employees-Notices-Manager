@@ -17,7 +17,7 @@ export class EmployeeService {
 
 
   updateEmployee(id : string, employee :Employee){
-    return this.httpClient.put(HttpUrls.update_employee+ `/${id}`,employee,{
+    return this.httpClient.put(HttpUrls.update_employee + `/${id}`,employee,{
         headers: {
           'Content-Type': 'application/json'
         }

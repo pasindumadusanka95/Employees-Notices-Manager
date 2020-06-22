@@ -54,7 +54,8 @@
     </div>
   </div>
   <div class="text-right">
-    <button  mat-raised-button color="basic"  class="mr-2">Edit</button>
-    <button  mat-raised-button color="basic" >Save</button>
+    <button   mat-raised-button color="basic"  class="mr-2" [mat-dialog-close]>Close</button>
+    <button *ngIf="!isEdit"  mat-raised-button color="basic"  class="mr-2" (click)="setEdit()">Edit</button>
+    <button  *ngIf="isEdit" mat-raised-button color="basic" (click)="updateEmployee()">Save</button>
     </div>
 </form>
