@@ -33,6 +33,8 @@ import { ConfirmationModalComponent } from './shared/popup-modals/confirmation-m
 import { SnackBarComponent } from './shared/popup-modals/snack-bar/snack-bar.component';
 import { AddNoticeComponent } from './modules/notice/add-notice/add-notice.component';
 import { LoginComponent } from './modules/login/login.component';
+import {ErrorInterceptor} from "./_helpers/error.interceptor";
+import {JwtInterceptor} from "./_helpers/jwt.interceptor";
 
 @NgModule({
   declarations: [
@@ -77,7 +79,9 @@ import { LoginComponent } from './modules/login/login.component';
   providers: [
     FullPageLoaderService,
     SnackBarComponent,
-    { provide: HTTP_INTERCEPTORS, useClass: FullPageLoaderInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: FullPageLoaderInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
   ],
   bootstrap: [AppComponent],
 })

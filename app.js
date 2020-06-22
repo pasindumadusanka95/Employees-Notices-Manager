@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const path = require('path');
 const errorHandler = require('./_helpers/error-handler');
-const jwt = require('./_helpers/jwt');
+// const jwt = require('./_helpers/jwt');
 
 var app =express();
 
@@ -41,9 +41,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 //routes
 app.use('/api', notice);
 app.use('/api', employee);
-app.use('/api', users);
+app.use('/users', require('./users/users.controller'));
 
-app.use(jwt());
+// app.use(jwt());
 app.use(errorHandler);
 
 //testing
