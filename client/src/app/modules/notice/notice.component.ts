@@ -23,6 +23,8 @@ export class NoticeComponent implements OnInit, OnChanges {
   isEdit : boolean = false;
   isDelete : boolean = false;
   isContent : boolean = true;
+  isUser : boolean =false;
+  isAdmin : boolean = false;
   uploading: boolean = false;
   title : string = "";
   description : string = "";
@@ -45,6 +47,16 @@ export class NoticeComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
+    const token = JSON.parse(localStorage.getItem('user'));
+
+    if(token.role == 'User'){
+      this.isUser = true;
+    }
+    if(token.role == 'Admin'){
+      this.isAdmin = true;
+    }
+
+
     this.getNoticeList();
     this.refreshComponent();
   }
