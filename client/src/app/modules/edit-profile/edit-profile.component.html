@@ -4,15 +4,21 @@
     <div class="row">
       <div class="col-md-4" style="display: flex;align-items: center;">
         <div class="avatar-upload">
-          <div class="avatar-edit">
-            <input type='file' formControlName="profileImage" id="imageUpload2" accept=".png, .jpg, .jpeg"/>
-            <label for="imageUpload2"></label>
-          </div>
-          <div class="avatar-preview">
-
-            <div id="imagePreview3"
-                 style="background-image: url(assets/logo/dp.jpg);">
+          <div class="avatar-preview"  *ngIf="!imageURL && imageURL !== ''">
+            <div id="imagePreview2"  style="background-image: url(assets/dp.jpg);">
             </div>
+            <br>
+          </div>
+          <div  *ngIf="imageURL && imageURL !== ''">
+
+            <img *ngIf="isEdit" class="avatar-preview" [src]="imageURL">
+
+          </div>
+          <div *ngIf="isEdit">
+            <input type="file" name="image" ng2FileSelect [uploader]="uploader" accept="image/x-png,image/gif,image/jpeg" (change)="showProfilePreview($event)"  />
+            <button type="button" (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
+              Upload
+            </button>
           </div>
         </div>
         <!-- dp uploading section ends -->

@@ -36,6 +36,7 @@ import { LoginComponent } from './modules/login/login.component';
 import {ErrorInterceptor} from "./_helpers/error.interceptor";
 import {JwtInterceptor} from "./_helpers/jwt.interceptor";
 import { EditProfileComponent } from './modules/edit-profile/edit-profile.component';
+import {FileUploadModule} from "ng2-file-upload";
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { EditProfileComponent } from './modules/edit-profile/edit-profile.compon
     SnackBarComponent,
     AddNoticeComponent,
     LoginComponent,
-    EditProfileComponent
+    EditProfileComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -76,6 +78,7 @@ import { EditProfileComponent } from './modules/edit-profile/edit-profile.compon
     MatAutocompleteModule,
     MatProgressSpinnerModule,
     MatStepperModule,
+    FileUploadModule,
 
   ],
   providers: [

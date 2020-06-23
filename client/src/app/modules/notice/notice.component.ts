@@ -8,6 +8,9 @@ import {not} from "rxjs/internal-compatibility";
 import {CustomWarningModalComponent} from "../../shared/popup-modals/custom-warning-modal/custom-warning-modal.component";
 import {MatDialog} from "@angular/material/dialog";
 import {Router} from "@angular/router";
+import {FileUploader} from "ng2-file-upload";
+
+const URL = 'http://localhost:3000/api/upload';
 
 @Component({
   selector: 'app-notice',
@@ -16,7 +19,11 @@ import {Router} from "@angular/router";
   providers : [NoticeService]
 })
 export class NoticeComponent implements OnInit, OnChanges {
-
+  imageURL: string;
+  public uploader: FileUploader = new FileUploader({
+    url: URL,
+    itemAlias: 'image'
+  });
   @Input('objectId') selectedObjectId : string;
 
   public imageString: String;
@@ -39,7 +46,7 @@ export class NoticeComponent implements OnInit, OnChanges {
     image: new FormControl(),
     title: new FormControl('', [Validators.required]),
     description: new FormControl('', [Validators.required]),
-
+    avatar : new FormControl(null),
   });
 
   constructor(private noticeService: NoticeService, private customPopup : SnackBarComponent, private dialog : MatDialog
@@ -47,6 +54,15 @@ export class NoticeComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
+
+    this.uploader.onAfterAddingFile = (file) => {
+      file.withCredentials = false;
+    };
+    this.uploader.onCompleteItem = (item: any, status: any) => {
+      console.log('Uploaded File Details:', item);
+      this.customPopup.openSnackBar("Image Uploaded Successful",'success')
+    };
+
     const token = JSON.parse(localStorage.getItem('user'));
 
     if(token.role == 'User'){
@@ -197,4 +213,20 @@ export class NoticeComponent implements OnInit, OnChanges {
     });
   }
 
+  // Image Preview
+  showNoticePreview(event) {
+
+    const file = (event.target as HTMLInputElement).files[0];
+    this.noticeForm.patchValue({
+      avatar: file
+    });
+    this.noticeForm.get('avatar').updateValueAndValidity()
+
+    // File Preview
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.imageURL = reader.result as string;
+    }
+    reader.readAsDataURL(file)
+  }
 }

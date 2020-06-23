@@ -7,6 +7,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const path = require('path');
 const errorHandler = require('./_helpers/error-handler');
+const multer = require('multer');
 // const jwt = require('./_helpers/jwt');
 
 var app =express();
@@ -62,6 +63,43 @@ app.use(errorHandler);
 // app.listen(port,()=>{
 //     console.log('Server started at port: '+port);
 // });
+
+// File upload settings
+const PATH = './public/uploads';
+
+let storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, PATH);
+    },
+    filename: (req, file, cb) => {
+        cb(null, file.fieldname + '-' + Date.now())
+    }
+});
+
+let upload = multer({
+    storage: storage
+});
+
+app.get('/api', function (req, res) {
+    res.end('File catcher');
+});
+
+// POST File
+app.post('/api/upload', upload.single('image'), function (req, res) {
+    if (!req.file) {
+        console.log("No file is available!");
+        return res.send({
+            success: false
+        });
+
+    } else {
+        console.log('File is available!');
+        return res.send({
+            success: true
+        })
+    }
+});
+
 
 app.get('server').listen(port,()=>{
     console.log('Server started at port: '+port);

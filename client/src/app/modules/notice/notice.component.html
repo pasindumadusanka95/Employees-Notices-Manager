@@ -9,18 +9,25 @@
     <div class="row">
       <div class="col-md-4" style="display: flex;align-items: center;">
         <div class="avatar-upload">
-          <div class="avatar-preview">
-            <div id="imagePreview2" *ngIf="!imageString" style="background-image: url(assets/dp.jpg);">
+          <div class="avatar-preview" *ngIf="!isEdit">
+            <div id="imagePreview2"  style="background-image: url(assets/notice.jpg);">
             </div>
             <br>
           </div>
+          <div  *ngIf="imageURL && imageURL !== ''">
+
+              <img *ngIf="isEdit" class="avatar-preview" [src]="imageURL">
+
+          </div>
           <div class=" inline-block text-center">
             <br>
-            <input  type='file' formControlName="image" id="image"  />
-<!--            <button class="btn btn-success p-lg-1"  >-->
-<!--              Browse-->
-<!--            </button>-->
-<!--            <button class="btn btn-primary p-lg-1"  [disabled]="uploading"> Upload </button>-->
+            <div *ngIf="isEdit">
+              <input type="file" name="image" ng2FileSelect [uploader]="uploader" accept="image/x-png,image/gif,image/jpeg" (change)="showNoticePreview($event)"  />
+              <button type="button" (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
+                Upload
+              </button>
+            </div>
+
           </div>
 
 

@@ -56,7 +56,7 @@ router.put('/notice/update/:id',upload,(req,res,next)=>{
     let newNotice = new notice({
         title : req.body.title,
         description : req.body.description,
-        image :  req.body.image
+        image :   req.body.image
     });
 
     notice.findByIdAndUpdate({_id : req.params.id},{$set:req.body},(err,notice)=>{

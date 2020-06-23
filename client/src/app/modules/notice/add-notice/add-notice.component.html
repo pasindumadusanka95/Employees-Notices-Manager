@@ -6,14 +6,20 @@
         <div class="col-md-4" style="display: flex;align-items: center;">
           <div class="avatar-upload">
             <div class="avatar-preview">
-              <div id="imagePreview2" style="background-image: url(assets/dp.jpg);">
+              <div id="imagePreview2" style="background-image: url(assets/notice.jpg);">
               </div>
               <br>
             </div>
           </div>
+
           <!-- dp uploading section ends -->
         </div>
         <div class="col-md-8">
+          <input class="col-md-10" type="file" name="image" ng2FileSelect [uploader]="uploader" accept="image/x-png,image/gif,image/jpeg" (change)="showPreview($event)"  />
+          <button type="button" (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
+            Upload
+          </button>
+<!--          <input  type='file' formControlName="image" id="image" class="col-md-10" />-->
           <mat-form-field  appearance="standard"  class="col-md-10">
             <mat-label>Title</mat-label>
             <input type="text" formControlName="title" matInput >
