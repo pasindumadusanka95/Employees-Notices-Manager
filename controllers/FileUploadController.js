@@ -3,10 +3,12 @@ const  router = express.Router();
 const multer = require('multer');
 
 const storage = multer.diskStorage({
-    destination : (req,file,callBack)=>{
-        callBack(null, 'uploads')
-    },
+    destination :"./public/uploads/",
     filename: (req,file,callBack) => {
-        callBack(null,'')
+        callBack(null,file.filedname+"_"+Date.now()+path.extname(file.originalname));
     }
 });
+
+const upload = multer({
+    storage : storage
+}).single('image');

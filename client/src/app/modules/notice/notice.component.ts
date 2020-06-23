@@ -4,6 +4,10 @@ import {MatStepper} from "@angular/material/stepper";
 import {Notice} from "../../shared/models/notice";
 import {NoticeService} from "../../core/services/notice.service";
 import {SnackBarComponent} from "../../shared/popup-modals/snack-bar/snack-bar.component";
+import {not} from "rxjs/internal-compatibility";
+import {CustomWarningModalComponent} from "../../shared/popup-modals/custom-warning-modal/custom-warning-modal.component";
+import {MatDialog} from "@angular/material/dialog";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-notice',
@@ -17,8 +21,11 @@ export class NoticeComponent implements OnInit, OnChanges {
 
   public imageString: String;
   isEdit : boolean = false;
-
+  isDelete : boolean = false;
+  isContent : boolean = true;
   uploading: boolean = false;
+  title : string = "";
+  description : string = "";
   notice: Notice = {
     title: '',
     description:'',
@@ -33,11 +40,13 @@ export class NoticeComponent implements OnInit, OnChanges {
 
   });
 
-  constructor(private noticeService: NoticeService, private customPopup : SnackBarComponent) {
+  constructor(private noticeService: NoticeService, private customPopup : SnackBarComponent, private dialog : MatDialog
+               , private router: Router) {
   }
 
   ngOnInit(): void {
     this.getNoticeList();
+    this.refreshComponent();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -49,11 +58,26 @@ export class NoticeComponent implements OnInit, OnChanges {
 
   }
 
-  deleteNotice(id: any) {
-
-    this.noticeService.deleteNotice(id).subscribe(data => {
-      this.getNoticeList();
+  deleteNotice() {
+    let dialogRefDelete: any;
+    dialogRefDelete = this.dialog.open(CustomWarningModalComponent, {
+      width: '400px',
+      data: {
+        save: true,
+        no: false,
+        message: 'Are you sure you want to delete this notice?'
+      }
     });
+
+    dialogRefDelete.afterClosed().subscribe(result => {
+      if (result) {
+        this.noticeService.deleteNotice(this.selectedObjectId).subscribe(data => {
+          this.customPopup.openSnackBar("Notice Deleted Successfully!","delete")
+        });
+        this.isDelete =true;
+      }
+    });
+
   }
 
   addNotice(){
@@ -62,21 +86,52 @@ export class NoticeComponent implements OnInit, OnChanges {
     newNotice.description = this.noticeForm.controls.description.value;
     newNotice.image = "test";
     if(this.isEdit){
-      this.noticeService.updateNotice(this.selectedObjectId,newNotice).subscribe(notice=>{
-        this.customPopup.openSnackBar("Notice Updated Successfully!","warning")
-        this.getNoticeList();
-      },error => {
-        console.log(error);
+      let dialogRefEdit: any;
+      dialogRefEdit = this.dialog.open(CustomWarningModalComponent, {
+        width: '400px',
+        data: {
+          save: true,
+          no: false,
+          message: 'Are you sure you want to update this notice?'
+        }
       });
+
+      dialogRefEdit.afterClosed().subscribe(result => {
+        if (result) {
+          this.noticeService.updateNotice(this.selectedObjectId,newNotice).subscribe(notice=>{
+            this.customPopup.openSnackBar("Notice Updated Successfully!","warning")
+            this.getNoticeList();
+          },error => {
+            console.log(error);
+          });
+        }
+      });
+
       this.isEdit = false;
+      this.isContent = true;
     }
     else{
-      this.noticeService.addNotices(newNotice).subscribe(notice=>{
-        this.customPopup.openSnackBar("Notice Saved Successfully!","success")
-        this.getNoticeList();
-      },error => {
-        console.log(error);
+      let dialogRefSave: any;
+      dialogRefSave = this.dialog.open(CustomWarningModalComponent, {
+        width: '400px',
+        data: {
+          save: true,
+          no: false,
+          message: 'Are you sure you want to save this notice?'
+        }
       });
+
+      dialogRefSave.afterClosed().subscribe(result => {
+        if (result) {
+          this.noticeService.addNotices(newNotice).subscribe(notice=>{
+            this.customPopup.openSnackBar("Notice Saved Successfully!","success")
+            this.getNoticeList();
+          },error => {
+            console.log(error);
+          });
+        }
+      });
+
     }
     this.noticeForm.disable();
 
@@ -85,6 +140,7 @@ export class NoticeComponent implements OnInit, OnChanges {
   setToEdit(){
     this.noticeForm.enable();
     this.isEdit =true;
+    this.isContent = false;
   }
 
 
@@ -105,18 +161,28 @@ export class NoticeComponent implements OnInit, OnChanges {
   getNotice(id:string){
     this.noticeService.getNotice(id)
       .subscribe(notice => {
-        this.noticeForm.controls.title.setValue(notice.title);
-        this.noticeForm.controls.description.setValue(notice.description);
+        if(notice){
+          this.title = notice.title;
+          this.description = notice.description;
+          this.noticeForm.controls.title.setValue(notice.title);
+          this.noticeForm.controls.description.setValue(notice.description);
+        }
+
       });
 
   }
 
-
   setState(){
     this.noticeForm.disable();
     this.isEdit = false;
+    this.isContent = true;
+   // window.location.reload();
   }
 
-
+  refreshComponent() {
+    this.router.navigateByUrl('/main', {skipLocationChange: true}).then(() => {
+      this.router.navigate(['/main']);
+    });
+  }
 
 }

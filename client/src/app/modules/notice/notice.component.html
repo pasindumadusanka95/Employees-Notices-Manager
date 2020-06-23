@@ -4,7 +4,7 @@
       <span class="sr-only"></span>
     </div>
   </div>
-<form class="mat-step-content" [formGroup]="noticeForm">
+<form class="mat-step-content" [formGroup]="noticeForm" enctype="multipart/form-data">
   <div class="pl-5">
     <div class="row">
       <div class="col-md-4" style="display: flex;align-items: center;">
@@ -16,11 +16,11 @@
           </div>
           <div class=" inline-block text-center">
             <br>
-            <input  type='file' formControlName="image" id="imageUpload"  [disabled]="uploading"  accept=".png, .jpg, .jpeg" style="display: none"/>
-            <button class="btn btn-success p-lg-1"  >
-              Browse
-            </button>
-            <button class="btn btn-primary p-lg-1"  [disabled]="uploading"> Upload </button>
+            <input  type='file' formControlName="image" id="image"  />
+<!--            <button class="btn btn-success p-lg-1"  >-->
+<!--              Browse-->
+<!--            </button>-->
+<!--            <button class="btn btn-primary p-lg-1"  [disabled]="uploading"> Upload </button>-->
           </div>
 
 
@@ -29,12 +29,14 @@
       </div>
       <div class="col-md-8">
 <!--        <input type="hidden" formControlName="id">-->
-        <mat-form-field  appearance="standard"  class="col-md-10">
+        <h3 *ngIf="isContent" class="title-style col-md-10"> {{title}}</h3>
+        <p  *ngIf="isContent" class="description-style col-md-10">{{description}}</p>
+        <mat-form-field  appearance="standard"  class="col-md-10" *ngIf="!isContent">
           <mat-label>Title</mat-label>
           <input type="text" formControlName="title" matInput >
         </mat-form-field>
         <br>
-        <mat-form-field appearance="fill"  class="col-md-10" >
+        <mat-form-field appearance="fill"  class="col-md-10" *ngIf="!isContent">
           <mat-label>Description</mat-label>
           <textarea type="text" formControlName="description" matInput style="min-height: 162px !important;"></textarea>
         </mat-form-field>
@@ -43,6 +45,7 @@
   </div>
   <div class="text-right">
     <button mat-raised-button color="basic" class="mr-2"  (click)="setState()" matStepperPrevious><mat-icon>navigate_before</mat-icon>Back To List</button>
+    <button *ngIf="!isEdit" mat-raised-button color="warn"  class="mr-2" (click)="deleteNotice()">Delete</button>
     <button *ngIf="!isEdit" mat-raised-button color="basic"  class="mr-2" (click)="setToEdit()">Edit</button>
     <button *ngIf="isEdit"  mat-raised-button color="basic" (click)="addNotice()">Save</button>
   </div>

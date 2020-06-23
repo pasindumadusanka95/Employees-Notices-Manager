@@ -1,7 +1,20 @@
 const express = require('express');
 const  router = express.Router();
-
+const multer = require('multer');
 const notice = require('../models/notices');
+
+const storage = multer.diskStorage({
+    destination :"./public/uploads/",
+    filename: (req,file,callBack) => {
+        callBack(null,file.fieldname+"_"+Date.now()+path.extname(file.originalname));
+    }
+});
+
+const upload = multer({
+    storage : storage
+}).single('image');
+
+
 
 
 //retrieving notice list
@@ -19,11 +32,11 @@ router.get('/notices/getById/:id',(req,res,next)=>{
 });
 
 //add notice
-router.post('/notice/add',(req,res,next)=>{
+router.post('/notice/add',upload,(req,res,next)=>{
     let newNotice = new notice({
         title : req.body.title,
         description : req.body.description,
-        image : req.body.image
+        image :  req.body.image
     });
 
     newNotice.save((err,notice)=>{
@@ -39,11 +52,11 @@ router.post('/notice/add',(req,res,next)=>{
 });
 
 //update notice
-router.put('/notice/update/:id',(req,res,next)=>{
+router.put('/notice/update/:id',upload,(req,res,next)=>{
     let newNotice = new notice({
         title : req.body.title,
         description : req.body.description,
-        image : req.body.image
+        image :  req.body.image
     });
 
     notice.findByIdAndUpdate({_id : req.params.id},{$set:req.body},(err,notice)=>{

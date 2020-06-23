@@ -1,3 +1,12 @@
 ::ng-deep .mat-horizontal-stepper-header-container {
   display: none !important;
 }
+.title-style{
+  font-size: 15px;
+  font-style: italic;
+  color: darkslategrey;
+}
+.detail-style{
+  cursor: pointer;
+  color : royalblue;
+}

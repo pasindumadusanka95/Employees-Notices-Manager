@@ -6,6 +6,7 @@ import {MatStepper} from "@angular/material/stepper";
 import {MatDialog} from "@angular/material/dialog";
 import {NoticeComponent} from "../notice/notice.component";
 import {AddNoticeComponent} from "../notice/add-notice/add-notice.component";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-notice-list',
@@ -24,10 +25,11 @@ export class NoticeListComponent implements OnInit {
   searchNoticeList : Notice[] = [];
   search = new FormControl();
 
-  constructor(private noticeService : NoticeService, private dialog: MatDialog) { }
+  constructor(private noticeService : NoticeService, private dialog: MatDialog, private router: Router) { }
 
   ngOnInit(): void {
    this.getNoticeList();
+   //this.refreshComponent();
    this.searchTrigger();
     const token = JSON.parse(localStorage.getItem('user'));
 
@@ -80,6 +82,12 @@ export class NoticeListComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
+    });
+  }
+
+  refreshComponent() {
+    this.router.navigateByUrl('/main', {skipLocationChange: true}).then(() => {
+      this.router.navigate(['/main']);
     });
   }
 
