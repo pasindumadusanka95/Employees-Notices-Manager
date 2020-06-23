@@ -60,9 +60,7 @@ app.use(errorHandler);
 // app.get('/',(req,res) =>{
 //     res.send('testing');
 // });
-// app.listen(port,()=>{
-//     console.log('Server started at port: '+port);
-// });
+
 
 // File upload settings
 const PATH = './public/uploads';
@@ -101,6 +99,9 @@ app.post('/api/upload', upload.single('image'), function (req, res) {
 });
 
 
-app.get('server').listen(port,()=>{
+// app.get('server').listen(port,()=>{
+//     console.log('Server started at port: '+port);
+// });
+app.listen(port,()=>{
     console.log('Server started at port: '+port);
 });

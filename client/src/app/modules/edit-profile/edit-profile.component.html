@@ -11,12 +11,13 @@
           </div>
           <div  *ngIf="imageURL && imageURL !== ''">
 
-            <img *ngIf="isEdit" class="avatar-preview" [src]="imageURL">
+            <img  class="avatar-preview" [src]="imageURL">
 
           </div>
           <div *ngIf="isEdit">
-            <input type="file" name="image" ng2FileSelect [uploader]="uploader" accept="image/x-png,image/gif,image/jpeg" (change)="showProfilePreview($event)"  />
-            <button type="button" (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
+            <input class="pb-1" type="file" name="image" ng2FileSelect [uploader]="uploader" accept="image/x-png,image/gif,image/jpeg" (change)="showProfilePreview($event)"  />
+<br>
+            <button class="btn-group-sm btn-primary" type="button" (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
               Upload
             </button>
           </div>

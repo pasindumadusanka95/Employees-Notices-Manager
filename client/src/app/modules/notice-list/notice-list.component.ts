@@ -65,16 +65,19 @@ export class NoticeListComponent implements OnInit {
   getNoticeList() {
     this.noticeService.getNotices()
       .subscribe(notices => {
-        this.notices = notices.map(item =>{
-          let date = new Date(item.updatedAt)
-         return{
-            _id : item._id,
-           title : item.title,
-           description : item.description,
-           updatedAt : date.toLocaleDateString() +", "+ date.toLocaleTimeString()
-         } as Notice
-        });
-        this.finalNoticeList = notices;
+        if(notices){
+          this.notices = notices.map(item =>{
+            let date = new Date(item.updatedAt)
+            return{
+              _id : item._id,
+              title : item.title,
+              description : item.description,
+              updatedAt : date.toLocaleDateString() +", "+ date.toLocaleTimeString()
+            } as Notice
+          });
+          this.finalNoticeList = this.notices;
+        }
+
       });
   }
 
@@ -85,17 +88,10 @@ export class NoticeListComponent implements OnInit {
       maxHeight: '800px',
       data: {
         yes: false,
-
       }
     });
 
     dialogRef.afterClosed().subscribe(result => {
-    });
-  }
-
-  refreshComponent() {
-    this.router.navigateByUrl('/main', {skipLocationChange: true}).then(() => {
-      this.router.navigate(['/main']);
     });
   }
 

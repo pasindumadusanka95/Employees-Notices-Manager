@@ -17,6 +17,7 @@ const URL = 'http://localhost:3000/api/upload';
 export class EditProfileComponent implements OnInit {
 
   imageURL: string;
+  isSave : boolean = false;
   public uploader: FileUploader = new FileUploader({
     url: URL,
     itemAlias: 'image'
@@ -75,7 +76,8 @@ export class EditProfileComponent implements OnInit {
     newEmployee.profilePic = "test";
 
       this.employeeService.updateEmployee(this.loggedObjectId,newEmployee).subscribe(notice=>{
-        this.customPopup.openSnackBar("Profile Updated Successfully!","warning")
+        this.customPopup.openSnackBar("Profile Updated Successfully!","warning");
+        this.isSave = true;
       },error => {
         console.log(error);
       });
@@ -88,6 +90,7 @@ export class EditProfileComponent implements OnInit {
   setEdit(){
     this.employeeForm.enable();
     this.isEdit = true;
+    this.isSave = false;
   }
 
 

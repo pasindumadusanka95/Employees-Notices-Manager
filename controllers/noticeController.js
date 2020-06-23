@@ -2,6 +2,11 @@ const express = require('express');
 const  router = express.Router();
 const multer = require('multer');
 const notice = require('../models/notices');
+const app = express();
+const port = 3000;
+const http = require("http").createServer();
+const io =require("socket.io")(http);
+
 
 const storage = multer.diskStorage({
     destination :"./public/uploads/",

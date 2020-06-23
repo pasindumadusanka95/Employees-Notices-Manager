@@ -47,7 +47,7 @@ export class AddNoticeComponent implements OnInit {
 
       this.noticeService.addNotices(newNotice).subscribe(notice=>{
         this.customPopup.openSnackBar("Notice Saved Successfully!","success")
-
+        window.location.reload();
       },error => {
         console.log(error);
       });

@@ -30,6 +30,7 @@ export class NoticeComponent implements OnInit, OnChanges {
   isEdit : boolean = false;
   isDelete : boolean = false;
   isContent : boolean = true;
+  isChange : boolean = false;
   isUser : boolean =false;
   isAdmin : boolean = false;
   uploading: boolean = false;
@@ -95,6 +96,7 @@ export class NoticeComponent implements OnInit, OnChanges {
 
     dialogRefDelete.afterClosed().subscribe(result => {
       if (result) {
+        this.isChange = true;
         this.noticeService.deleteNotice(this.selectedObjectId).subscribe(data => {
           this.customPopup.openSnackBar("Notice Deleted Successfully!","delete")
         });
@@ -125,6 +127,7 @@ export class NoticeComponent implements OnInit, OnChanges {
           this.title = this.noticeForm.controls.title.value;
           this.description = this.noticeForm.controls.description.value;
           this.noticeService.updateNotice(this.selectedObjectId,newNotice).subscribe(notice=>{
+            this.isChange = true;
             this.customPopup.openSnackBar("Notice Updated Successfully!","warning")
             this.getNoticeList();
           },error => {
@@ -164,6 +167,7 @@ export class NoticeComponent implements OnInit, OnChanges {
   }
 
   setToEdit(){
+
     this.noticeForm.enable();
     this.isEdit =true;
     this.isContent = false;
@@ -201,6 +205,9 @@ export class NoticeComponent implements OnInit, OnChanges {
 
   setState(){
     this.noticeForm.disable();
+    if(this.isChange){
+      window.location.reload();
+    }
     this.isEdit = false;
     this.isContent = true;
    // window.location.reload();
