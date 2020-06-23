@@ -19,7 +19,7 @@ body {
   overflow-x: hidden;
 }
 
-.header{
+.header {
   background-image: url("assets/header/cover.png");
   background-size: cover;
   margin-bottom: -300px;
@@ -28,11 +28,11 @@ body {
   z-index: -1000;
 }
 
-.page-title{
+.page-title {
   padding: 10px;
   font-family: sans-serif;
   font-size: 25px !important;
-  color:white;
+  color: white;
   text-align: left;
   margin-bottom: 10px !important;
 
@@ -45,9 +45,10 @@ body {
 
 
 }
+
 .avatar-upload .avatar-edit {
   position: absolute;
-  right:-30px;
+  right: -30px;
   bottom: 10px;
 }
 
@@ -102,7 +103,8 @@ body {
   background-position: center;
 
 }
-.list-head{
+
+.list-head {
   background-color: white;
   border-radius: 10px;
   width: 100%;

@@ -1,14 +1,12 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
-import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {MatStepper} from "@angular/material/stepper";
-import {Notice} from "../../shared/models/notice";
-import {NoticeService} from "../../core/services/notice.service";
-import {SnackBarComponent} from "../../shared/popup-modals/snack-bar/snack-bar.component";
-import {not} from "rxjs/internal-compatibility";
-import {CustomWarningModalComponent} from "../../shared/popup-modals/custom-warning-modal/custom-warning-modal.component";
-import {MatDialog} from "@angular/material/dialog";
-import {Router} from "@angular/router";
-import {FileUploader} from "ng2-file-upload";
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {Notice} from '../../shared/models/notice';
+import {NoticeService} from '../../core/services/notice.service';
+import {SnackBarComponent} from '../../shared/popup-modals/snack-bar/snack-bar.component';
+import {CustomWarningModalComponent} from '../../shared/popup-modals/custom-warning-modal/custom-warning-modal.component';
+import {MatDialog} from '@angular/material/dialog';
+import {Router} from '@angular/router';
+import {FileUploader} from 'ng2-file-upload';
 
 const URL = 'http://localhost:3000/api/upload';
 
@@ -16,38 +14,39 @@ const URL = 'http://localhost:3000/api/upload';
   selector: 'app-notice',
   templateUrl: './notice.component.html',
   styleUrls: ['./notice.component.css'],
-  providers : [NoticeService]
+  providers: [NoticeService]
 })
 export class NoticeComponent implements OnInit, OnChanges {
-  imageURL: string;
+
+
+  @Input('objectId') selectedObjectId: string;
   public uploader: FileUploader = new FileUploader({
     url: URL,
     itemAlias: 'image'
   });
-  @Input('objectId') selectedObjectId : string;
-
-  public imageString: String;
-  isEdit : boolean = false;
-  isDelete : boolean = false;
-  isContent : boolean = true;
-  isChange : boolean = false;
-  isUser : boolean =false;
-  isAdmin : boolean = false;
-  uploading: boolean = false;
-  title : string = "";
-  description : string = "";
-  notice: Notice ;
+  imageURL: string;
+  isEdit = false;
+  isDelete = false;
+  isContent = true;
+  isChange = false;
+  isUser = false;
+  isAdmin = false;
+  uploading = false;
+  title = '';
+  description = '';
+  notice: Notice;
   notices: Notice[];
   finalNoticeList: Notice[] = [];
+
   noticeForm = new FormGroup({
     image: new FormControl(),
     title: new FormControl('', [Validators.required]),
     description: new FormControl('', [Validators.required]),
-    avatar : new FormControl(null),
+    avatar: new FormControl(null),
   });
 
-  constructor(private noticeService: NoticeService, private customPopup : SnackBarComponent, private dialog : MatDialog
-               , private router: Router) {
+  constructor(private noticeService: NoticeService, private customPopup: SnackBarComponent, private dialog: MatDialog
+    ,         private router: Router) {
   }
 
   ngOnInit(): void {
@@ -57,30 +56,28 @@ export class NoticeComponent implements OnInit, OnChanges {
     };
     this.uploader.onCompleteItem = (item: any, status: any) => {
       console.log('Uploaded File Details:', item);
-      this.customPopup.openSnackBar("Image Uploaded Successful",'success')
+      this.customPopup.openSnackBar('Image Uploaded Successful', 'success');
     };
 
     const token = JSON.parse(localStorage.getItem('user'));
 
-    if(token.role == 'User'){
+
+
+    if (token.role == 'User') {
       this.isUser = true;
     }
-    if(token.role == 'Admin'){
+    if (token.role == 'Admin') {
       this.isAdmin = true;
     }
-
 
     this.getNoticeList();
     this.refreshComponent();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log("hello");
-    console.log("check "+ this.selectedObjectId);
+
     this.getNotice(this.selectedObjectId);
     this.noticeForm.disable();
-
-
   }
 
   deleteNotice() {
@@ -98,20 +95,19 @@ export class NoticeComponent implements OnInit, OnChanges {
       if (result) {
         this.isChange = true;
         this.noticeService.deleteNotice(this.selectedObjectId).subscribe(data => {
-          this.customPopup.openSnackBar("Notice Deleted Successfully!","delete")
+          this.customPopup.openSnackBar('Notice Deleted Successfully!', 'delete');
         });
-        this.isDelete =true;
+        this.isDelete = true;
       }
     });
-
   }
 
-  addNotice(){
-    let newNotice = new Notice();
+  addNotice() {
+    const newNotice = new Notice();
     newNotice.title = this.noticeForm.controls.title.value;
     newNotice.description = this.noticeForm.controls.description.value;
-    newNotice.image = "test";
-    if(this.isEdit){
+    newNotice.image = 'test';
+    if (this.isEdit) {
       let dialogRefEdit: any;
       dialogRefEdit = this.dialog.open(CustomWarningModalComponent, {
         width: '400px',
@@ -126,11 +122,11 @@ export class NoticeComponent implements OnInit, OnChanges {
         if (result) {
           this.title = this.noticeForm.controls.title.value;
           this.description = this.noticeForm.controls.description.value;
-          this.noticeService.updateNotice(this.selectedObjectId,newNotice).subscribe(notice=>{
+          this.noticeService.updateNotice(this.selectedObjectId, newNotice).subscribe(notice => {
             this.isChange = true;
-            this.customPopup.openSnackBar("Notice Updated Successfully!","warning")
+            this.customPopup.openSnackBar('Notice Updated Successfully!', 'warning');
             this.getNoticeList();
-          },error => {
+          }, error => {
             console.log(error);
           });
         }
@@ -138,8 +134,7 @@ export class NoticeComponent implements OnInit, OnChanges {
 
       this.isEdit = false;
       this.isContent = true;
-    }
-    else{
+    } else {
       let dialogRefSave: any;
       dialogRefSave = this.dialog.open(CustomWarningModalComponent, {
         width: '400px',
@@ -152,10 +147,10 @@ export class NoticeComponent implements OnInit, OnChanges {
 
       dialogRefSave.afterClosed().subscribe(result => {
         if (result) {
-          this.noticeService.addNotices(newNotice).subscribe(notice=>{
-            this.customPopup.openSnackBar("Notice Saved Successfully!","success")
+          this.noticeService.addNotices(newNotice).subscribe(notice => {
+            this.customPopup.openSnackBar('Notice Saved Successfully!', 'success');
             this.getNoticeList();
-          },error => {
+          }, error => {
             console.log(error);
           });
         }
@@ -166,18 +161,10 @@ export class NoticeComponent implements OnInit, OnChanges {
 
   }
 
-  setToEdit(){
-
+  setToEdit() {
     this.noticeForm.enable();
-    this.isEdit =true;
+    this.isEdit = true;
     this.isContent = false;
-  }
-
-
-  setFormData(){
-    console.log("title "+ this.notice.title);
-    this.noticeForm.controls.title.setValue(this.notice.title);
-    this.noticeForm.controls.description.setValue(this.notice.description);
   }
 
   getNoticeList() {
@@ -189,28 +176,25 @@ export class NoticeComponent implements OnInit, OnChanges {
       });
   }
 
-  getNotice(id:string){
+  getNotice(id: string) {
     this.noticeService.getNotice(id)
       .subscribe(notice => {
-        if(notice){
+        if (notice) {
           this.title = notice.title;
           this.description = notice.description;
           this.noticeForm.controls.title.setValue(notice.title);
           this.noticeForm.controls.description.setValue(notice.description);
         }
-
       });
-
   }
 
-  setState(){
+  setState() {
     this.noticeForm.disable();
-    if(this.isChange){
+    if (this.isChange) {
       window.location.reload();
     }
     this.isEdit = false;
     this.isContent = true;
-   // window.location.reload();
   }
 
   refreshComponent() {
@@ -219,20 +203,18 @@ export class NoticeComponent implements OnInit, OnChanges {
     });
   }
 
-  // Image Preview
   showNoticePreview(event) {
 
     const file = (event.target as HTMLInputElement).files[0];
     this.noticeForm.patchValue({
       avatar: file
     });
-    this.noticeForm.get('avatar').updateValueAndValidity()
+    this.noticeForm.get('avatar').updateValueAndValidity();
 
-    // File Preview
     const reader = new FileReader();
     reader.onload = () => {
       this.imageURL = reader.result as string;
-    }
-    reader.readAsDataURL(file)
+    };
+    reader.readAsDataURL(file);
   }
 }

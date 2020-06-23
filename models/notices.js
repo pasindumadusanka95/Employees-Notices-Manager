@@ -1,18 +1,18 @@
 const mongoose = require('mongoose');
 
 const NoticeSchema = mongoose.Schema({
-    title :{
-        type : String,
-        required : true
-    },
-    description:{
-        type:String,
-        required : true
-    },
-     image : {
+    title: {
         type: String,
-         required : true
-     },
+        required: true
+    },
+    description: {
+        type: String,
+        required: true
+    },
+    image: {
+        type: String,
+        required: true
+    },
 
-},{ timestamps: true });
+}, {timestamps: true});
 const Notice = module.exports = mongoose.model("Notice", NoticeSchema);
