@@ -65,7 +65,15 @@ export class NoticeListComponent implements OnInit {
   getNoticeList() {
     this.noticeService.getNotices()
       .subscribe(notices => {
-        this.notices = notices;
+        this.notices = notices.map(item =>{
+          let date = new Date(item.updatedAt)
+         return{
+            _id : item._id,
+           title : item.title,
+           description : item.description,
+           updatedAt : date.toLocaleDateString() +", "+ date.toLocaleTimeString()
+         } as Notice
+        });
         this.finalNoticeList = notices;
       });
   }

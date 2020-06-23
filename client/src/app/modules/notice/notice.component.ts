@@ -35,11 +35,7 @@ export class NoticeComponent implements OnInit, OnChanges {
   uploading: boolean = false;
   title : string = "";
   description : string = "";
-  notice: Notice = {
-    title: '',
-    description:'',
-    image:''
-  };
+  notice: Notice ;
   notices: Notice[];
   finalNoticeList: Notice[] = [];
   noticeForm = new FormGroup({
@@ -126,6 +122,8 @@ export class NoticeComponent implements OnInit, OnChanges {
 
       dialogRefEdit.afterClosed().subscribe(result => {
         if (result) {
+          this.title = this.noticeForm.controls.title.value;
+          this.description = this.noticeForm.controls.description.value;
           this.noticeService.updateNotice(this.selectedObjectId,newNotice).subscribe(notice=>{
             this.customPopup.openSnackBar("Notice Updated Successfully!","warning")
             this.getNoticeList();
@@ -181,6 +179,7 @@ export class NoticeComponent implements OnInit, OnChanges {
   getNoticeList() {
     this.noticeService.getNotices()
       .subscribe(notices => {
+        console.log(notices);
         this.notices = notices;
         this.finalNoticeList = notices;
       });
