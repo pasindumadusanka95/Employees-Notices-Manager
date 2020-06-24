@@ -1,0 +1,10 @@
+<h2 mat-dialog-title>Save Changes</h2>
+<div mat-dialog-content>
+  <p><b>Are you sure you want to save changes?</b></p>
+</div>
+<div class="text-right">
+  <button mat-raised-button class="mr-2" color="basic" style="color: #c60000"  [mat-dialog-close]="data.no" >No</button>
+  <button mat-raised-button color="basic" style="color: #004b00"
+          [mat-dialog-close]="data.save"  cdkFocusInitial>Yes
+  </button>
+</div>

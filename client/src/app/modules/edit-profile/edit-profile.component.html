@@ -1,0 +1,68 @@
+<form class="mat-step-content" [formGroup]="employeeForm">
+  <h2>Edit Profile Information</h2>
+  <div class="pl-5">
+    <div class="row">
+      <div class="col-md-4" style="display: flex;align-items: center;">
+        <div class="avatar-upload">
+          <div class="avatar-preview" *ngIf="!imageURL && imageURL !== ''">
+            <div id="imagePreview2" style="background-image: url(assets/dp.jpg);">
+            </div>
+            <br>
+          </div>
+          <div *ngIf="imageURL && imageURL !== ''">
+
+            <img class="avatar-preview" [src]="imageURL">
+
+          </div>
+          <div *ngIf="isEdit">
+            <input class="pb-1" type="file" name="image" ng2FileSelect [uploader]="uploader"
+                   accept="image/x-png,image/gif,image/jpeg" (change)="showProfilePreview($event)"/>
+            <br>
+            <button class="btn-group-sm btn-primary" type="button" (click)="uploader.uploadAll()"
+                    [disabled]="!uploader.getNotUploadedItems().length">
+              Upload
+            </button>
+          </div>
+        </div>
+        <!-- uploading section ends -->
+      </div>
+      <div class="col-md-4">
+        <mat-form-field appearance="standard">
+          <mat-label>Employee Name</mat-label>
+          <input type="text" formControlName="name" matInput>
+        </mat-form-field>
+        <br>
+        <mat-form-field appearance="standard">
+          <mat-label>Age</mat-label>
+          <input type="text" formControlName="age" matInput>
+        </mat-form-field>
+        <br>
+        <mat-form-field appearance="standard">
+          <mat-label>Gender</mat-label>
+          <mat-select formControlName="gender">
+            <mat-option value="Male">Male</mat-option>
+            <mat-option value="Female">Female</mat-option>
+            <mat-option value="Other">Other</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+      </div>
+      <div class="col-md-4">
+        <mat-form-field appearance="standard">
+          <mat-label>Address</mat-label>
+          <input type="text" formControlName="address">
+        </mat-form-field>
+        <mat-form-field appearance="standard">
+          <mat-label>Phone No</mat-label>
+          <input type="number" formControlName="phoneNo" matInput>
+        </mat-form-field>
+
+      </div>
+    </div>
+  </div>
+  <div class="text-right">
+    <button mat-raised-button color="basic" class="mr-2" [mat-dialog-close]>Close</button>
+    <button *ngIf="!isEdit" mat-raised-button color="basic" class="mr-2" (click)="setEdit()">Edit</button>
+    <button *ngIf="isEdit" mat-raised-button color="basic" (click)="updateEmployee()">Save</button>
+  </div>
+</form>

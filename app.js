@@ -1,13 +1,20 @@
 //importing modules
 const express = require('express');
+const http = require('http');
+const socketio = require('socket.io');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const path = require('path');
+const errorHandler = require('./_helpers/error-handler');
+const multer = require('multer');
+
 
 var app =express();
 
-const route = require('./routes/route');
+const notice = require('./controllers/noticeController');
+const employee = require('./controllers/employeeController');
+const users = require('./users/users.controller');
 
 //connect mongoDb
 mongoose.connect('mongodb://pasindu2:pasindu2@cluster0-shard-00-00-elbkn.mongodb.net:27017,cluster0-shard-00-01-elbkn.mongodb.net:27017,cluster0-shard-00-02-elbkn.mongodb.net:27017/noticedb?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority',
@@ -23,6 +30,7 @@ mongoose.connection.on('error',(err)=>{
     }
 });
 
+//define port
 const port = 3000;
 
 //adding middleware
@@ -34,13 +42,55 @@ app.use(bodyParser.json());
 //static files
 app.use(express.static(path.join(__dirname, 'public')));
 
-//routes
-app.use('/api', route);
 
-//testing
-app.get('/',(req,res) =>{
-    res.send('testing');
+// Attach Socket.io
+const server = http.createServer(app);
+const io = socketio.listen(server);
+app.set('socketio', io);
+app.set('server', server);
+
+//routes
+app.use('/api', notice);
+app.use('/api', employee);
+app.use('/users', require('./users/users.controller'));
+
+//use errorHandler
+app.use(errorHandler);
+
+// File upload settings
+const PATH = './public/uploads';
+
+let storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, PATH);
+    },
+    filename: (req, file, cb) => {
+        cb(null, file.fieldname + '-' + Date.now())
+    }
 });
+let upload = multer({
+    storage: storage
+});
+
+app.get('/api', function (req, res) {
+    res.end('File catcher');
+});
+
+app.post('/api/upload', upload.single('image'), function (req, res) {
+    if (!req.file) {
+        console.log("No file is available!");
+        return res.send({
+            success: false
+        });
+
+    } else {
+        console.log('File is available!');
+        return res.send({
+            success: true
+        })
+    }
+});
+
 app.listen(port,()=>{
     console.log('Server started at port: '+port);
 });

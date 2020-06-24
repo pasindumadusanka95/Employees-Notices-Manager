@@ -1,0 +1,78 @@
+<p  class="page-title"><i class="fa fa-users mr-2"></i>Employees' Notices Manager</p>
+
+<div class="row list-head">
+  <div class="col-md-8 text-left p-2">
+    <mat-form-field appearance="outline" style="width: 90%">
+      <mat-label>Search by Notice Title</mat-label>
+      <input matInput placeholder="Placeholder" [formControl]="search">
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+  </div>
+  <div class="col-md-4 text-right p-2 mt-2">
+    <button class="btn btn-primary" *ngIf="isAdmin" (click)="addNews()">
+    Add News
+    </button>
+  </div>
+</div>
+<br>
+<mat-horizontal-stepper #stepper linear >
+  <mat-step  state="noticeList">
+    <div class="mat-step-content">
+        <div>
+          <div class="row" style="margin-top: -15px ; margin-bottom: -30px">
+
+          </div>
+          <div class="col-md-4 p-2 text-right" style="margin-top: 20px; margin-bottom: -20px">
+          </div>
+        </div>
+        <br> <br>
+        <div >
+          <div class="list-head">
+
+            <table class="table table-striped">
+              <thead>
+              <tr>
+                <th scope="col" class="first-row">Published At</th>
+                <th scope="col">Title</th>
+                <th scope="col"></th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let item of notices.slice().reverse();index as newsCounter">
+                <th scope = "row" class="first-row">{{item.updatedAt}}</th>
+                <td class="title-style">{{item.title}}</td>
+                <td><a class="detail-style" (click)="viewDetail(stepper,item._id)" >View Details</a></td>
+              </tr>
+
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+      </div>
+  </mat-step>
+  <mat-step  state="noticeDetail">
+    <div class="mat-step-content">
+
+      </div>
+    <br>
+      <h2>Notice Details</h2>
+      <div class="ml-auto p-2">
+        <div>
+          <app-notice [objectId] = "objectId" ></app-notice>
+        </div>
+
+      </div>
+    <div class="d-flex">
+      <div class="ml-auto p-2">
+
+      </div>
+    </div>
+  </mat-step>
+
+</mat-horizontal-stepper>
+
+<div>
+
+</div>
+
