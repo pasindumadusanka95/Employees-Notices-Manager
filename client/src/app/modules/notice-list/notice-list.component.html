@@ -3,7 +3,7 @@
 <div class="row list-head">
   <div class="col-md-8 text-left p-2">
     <mat-form-field appearance="outline" style="width: 90%">
-      <mat-label>Search by Name</mat-label>
+      <mat-label>Search by Notice Title</mat-label>
       <input matInput placeholder="Placeholder" [formControl]="search">
       <mat-icon matSuffix>search</mat-icon>
     </mat-form-field>
@@ -32,16 +32,16 @@
             <table class="table table-striped">
               <thead>
               <tr>
-                <th scope="col">#</th>
+                <th scope="col" class="first-row">Published At</th>
                 <th scope="col">Title</th>
                 <th scope="col"></th>
               </tr>
               </thead>
               <tbody>
               <tr *ngFor="let item of notices.slice().reverse();index as newsCounter">
-                <th scope="row">{{newsCounter+1}}</th>
-                <td>{{item.title}}</td>
-                <td><a (click)="viewDetail(stepper,item._id)" style="cursor: pointer">view details</a></td>
+                <th scope = "row" class="first-row">{{item.updatedAt}}</th>
+                <td class="title-style">{{item.title}}</td>
+                <td><a class="detail-style" (click)="viewDetail(stepper,item._id)" >View Details</a></td>
               </tr>
 
               </tbody>
@@ -72,11 +72,7 @@
 
 </mat-horizontal-stepper>
 
-
-
 <div>
-<br><br>
-
 
 </div>
 

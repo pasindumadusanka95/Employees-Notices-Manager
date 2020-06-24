@@ -19,7 +19,7 @@ body {
   overflow-x: hidden;
 }
 
-.header{
+.header {
   background-image: url("assets/header/cover.png");
   background-size: cover;
   margin-bottom: -300px;
@@ -28,11 +28,11 @@ body {
   z-index: -1000;
 }
 
-.page-title{
+.page-title {
   padding: 10px;
   font-family: sans-serif;
   font-size: 25px !important;
-  color:white;
+  color: white;
   text-align: left;
   margin-bottom: 10px !important;
 
@@ -42,10 +42,13 @@ body {
 .avatar-upload {
   position: relative;
   max-width: 205px;
+
+
 }
+
 .avatar-upload .avatar-edit {
   position: absolute;
-  right:-30px;
+  right: -30px;
   bottom: 10px;
 }
 
@@ -88,7 +91,8 @@ body {
   height: 180px;
   border: 4px solid #e4e4e4;
   box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.35);
-  margin-left: 20%;
+  /*margin-left: 10%;*/
+
 }
 
 .avatar-upload .avatar-preview > div {
@@ -97,8 +101,10 @@ body {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
+
 }
-.list-head{
+
+.list-head {
   background-color: white;
   border-radius: 10px;
   width: 100%;

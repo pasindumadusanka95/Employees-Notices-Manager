@@ -1,50 +1,64 @@
 <div class="list-head">
-  <div *ngIf="uploading"  class = "progress">
-    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width : 100%">
+  <div *ngIf="uploading" class="progress">
+    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="45"
+         aria-valuemin="0" aria-valuemax="100" style="width : 100%">
       <span class="sr-only"></span>
     </div>
   </div>
-<form class="mat-step-content" [formGroup]="noticeForm">
-  <div class="pl-5">
-    <div class="row">
-      <div class="col-md-4" style="display: flex;align-items: center;">
-        <div class="avatar-upload">
-          <div class="avatar-preview">
-            <div id="imagePreview2" *ngIf="!imageString" style="background-image: url(assets/dp.jpg);">
+  <form class="mat-step-content" [formGroup]="noticeForm" enctype="multipart/form-data">
+    <div class="pl-5">
+      <div class="row">
+        <div class="col-md-4" style="display: flex;align-items: center;">
+          <div class="avatar-upload">
+            <div class="avatar-preview" *ngIf="!isEdit">
+              <div id="imagePreview2" style="background-image: url(assets/notice.jpg);">
+              </div>
+              <br>
             </div>
-            <br>
-          </div>
-          <div class=" inline-block text-center">
-            <br>
-            <input  type='file' formControlName="image" id="imageUpload"  [disabled]="uploading"  accept=".png, .jpg, .jpeg" style="display: none"/>
-            <button class="btn btn-success p-lg-1"  >
-              Browse
-            </button>
-            <button class="btn btn-primary p-lg-1"  [disabled]="uploading"> Upload </button>
-          </div>
+            <div *ngIf="imageURL && imageURL !== ''">
 
+              <img *ngIf="isEdit" class="avatar-preview" [src]="imageURL">
 
+            </div>
+            <div class=" inline-block text-center">
+              <br>
+              <div *ngIf="isEdit">
+                <input type="file" name="image" ng2FileSelect [uploader]="uploader"
+                       accept="image/x-png,image/gif,image/jpeg" (change)="showNoticePreview($event)"/>
+                <button type="button" (click)="uploader.uploadAll()"
+                        [disabled]="!uploader.getNotUploadedItems().length">
+                  Upload
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
-        <!-- dp uploading section ends -->
-      </div>
-      <div class="col-md-8">
-<!--        <input type="hidden" formControlName="id">-->
-        <mat-form-field  appearance="standard"  class="col-md-10">
-          <mat-label>Title</mat-label>
-          <input type="text" formControlName="title" matInput >
-        </mat-form-field>
-        <br>
-        <mat-form-field appearance="fill"  class="col-md-10" >
-          <mat-label>Description</mat-label>
-          <textarea type="text" formControlName="description" matInput style="min-height: 162px !important;"></textarea>
-        </mat-form-field>
+        <div class="col-md-8">
+          <h3 *ngIf="isContent" class="title-style col-md-10"> {{title}}</h3>
+          <p *ngIf="isContent" class="description-style col-md-10">{{description}}</p>
+          <mat-form-field appearance="standard" class="col-md-10" *ngIf="!isContent">
+            <mat-label>Title</mat-label>
+            <input type="text" formControlName="title" matInput>
+          </mat-form-field>
+          <br>
+          <mat-form-field appearance="fill" class="col-md-10" *ngIf="!isContent">
+            <mat-label>Description</mat-label>
+            <textarea type="text" formControlName="description" matInput
+                      style="min-height: 162px !important;"></textarea>
+          </mat-form-field>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="text-right">
-    <button mat-raised-button color="basic" class="mr-2"  (click)="setState()" matStepperPrevious><mat-icon>navigate_before</mat-icon>Back To List</button>
-    <button *ngIf="!isEdit" mat-raised-button color="basic"  class="mr-2" (click)="setToEdit()">Edit</button>
-    <button *ngIf="isEdit"  mat-raised-button color="basic" (click)="addNotice()">Save</button>
-  </div>
-</form>
+    <div class="text-right pb-2">
+      <button mat-raised-button color="basic" class="mr-2" (click)="setState()" matStepperPrevious>
+        <mat-icon>navigate_before</mat-icon>
+        Back To List
+      </button>
+      <button *ngIf="!isEdit && isAdmin" mat-raised-button color="warn" class="mr-2" (click)="deleteNotice()">Delete
+      </button>
+      <button *ngIf="!isEdit && isAdmin" mat-raised-button color="basic" class="mr-2" (click)="setToEdit()">Edit
+      </button>
+      <button *ngIf="isEdit && isAdmin" mat-raised-button color="basic" (click)="addNotice()">Save</button>
+    </div>
+  </form>
 </div>

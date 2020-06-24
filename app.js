@@ -7,7 +7,8 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const path = require('path');
 const errorHandler = require('./_helpers/error-handler');
-// const jwt = require('./_helpers/jwt');
+const multer = require('multer');
+
 
 var app =express();
 
@@ -29,6 +30,7 @@ mongoose.connection.on('error',(err)=>{
     }
 });
 
+//define port
 const port = 3000;
 
 //adding middleware
@@ -42,8 +44,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 // Attach Socket.io
-var server = http.createServer(app);
-var io = socketio.listen(server);
+const server = http.createServer(app);
+const io = socketio.listen(server);
 app.set('socketio', io);
 app.set('server', server);
 
@@ -52,17 +54,43 @@ app.use('/api', notice);
 app.use('/api', employee);
 app.use('/users', require('./users/users.controller'));
 
-// app.use(jwt());
+//use errorHandler
 app.use(errorHandler);
 
-//testing
-// app.get('/',(req,res) =>{
-//     res.send('testing');
-// });
-// app.listen(port,()=>{
-//     console.log('Server started at port: '+port);
-// });
+// File upload settings
+const PATH = './public/uploads';
 
-app.get('server').listen(port,()=>{
+let storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, PATH);
+    },
+    filename: (req, file, cb) => {
+        cb(null, file.fieldname + '-' + Date.now())
+    }
+});
+let upload = multer({
+    storage: storage
+});
+
+app.get('/api', function (req, res) {
+    res.end('File catcher');
+});
+
+app.post('/api/upload', upload.single('image'), function (req, res) {
+    if (!req.file) {
+        console.log("No file is available!");
+        return res.send({
+            success: false
+        });
+
+    } else {
+        console.log('File is available!');
+        return res.send({
+            success: true
+        })
+    }
+});
+
+app.listen(port,()=>{
     console.log('Server started at port: '+port);
 });

@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
-import {ActivatedRoute, Router} from "@angular/router";
-import {AuthenticationService} from "../../core/services/authentication.service";
-import {first} from "rxjs/operators";
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
+import {ActivatedRoute, Router} from '@angular/router';
+import {AuthenticationService} from '../../core/services/authentication.service';
+import {first} from 'rxjs/operators';
 
 @Component({
   selector: 'app-login',
@@ -17,14 +17,21 @@ export class LoginComponent implements OnInit {
   });
   loading = false;
   submitted = false;
-  returnUrl: string ;
+  returnUrl: string;
   error = '';
-  get userFormControl() { return this.form.get('username'); }
-  get passwordFormControl() { return this.form.get('password'); }
-  constructor( private formBuilder: FormBuilder,
-               private route: ActivatedRoute,
-               private router: Router,
-               private authenticationService: AuthenticationService) {
+
+  get userFormControl() {
+    return this.form.get('username');
+  }
+
+  get passwordFormControl() {
+    return this.form.get('password');
+  }
+
+  constructor(private formBuilder: FormBuilder,
+              private route: ActivatedRoute,
+              private router: Router,
+              private authenticationService: AuthenticationService) {
 
     if (this.authenticationService.userValue) {
       this.router.navigate(['/main']);
@@ -33,15 +40,16 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/main';
+    this.returnUrl = this.route.snapshot.queryParams.returnUrl || '/main';
   }
 
-  get formData () { return this.form.controls; }
+  get formData() {
+    return this.form.controls;
+  }
 
-  submit(){
+  submit() {
     this.submitted = true;
 
-    // stop here if form is invalid
     if (this.form.invalid) {
       return;
     }

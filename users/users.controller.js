@@ -12,7 +12,7 @@ router.get('/:id', authorize(), getById);
 
 function authenticate(req, res, next) {
     userService.authenticate(req.body)
-        .then(user => user ? res.json(user) : res.status(400).json({ message: 'Username or password is incorrect' }))
+        .then(user => user ? res.json(user) : res.status(400).json({message: 'Username or password is incorrect'}))
         .catch(err => next(err));
 }
 
@@ -32,9 +32,8 @@ function getById(req, res, next) {
     const currentUser = req.user;
     const id = parseInt(req.params.id);
 
-    // only allow admins to access other user records
     if (id !== currentUser.sub && currentUser.role !== Role.Admin) {
-        return res.status(401).json({ message: 'Unauthorized' });
+        return res.status(401).json({message: 'Unauthorized'});
     }
 
     userService.getById(req.params.id)
