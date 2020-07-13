@@ -1,1 +1,1 @@
-# Assignment
+# Simple Notice Manager
